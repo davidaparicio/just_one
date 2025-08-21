@@ -17,22 +17,28 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Just One',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF6366F1),
+          brightness: Brightness.light,
+        ),
+        useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          elevation: 0,
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+          backgroundColor: Color(0xFF6366F1),
+          foregroundColor: Colors.white,
+        ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          elevation: 8,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+          ),
+        ),
       ),
       home: const MyHomePage(title: '🎲 Just One'),
     );
@@ -63,6 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool initFile = false;
   List<String> arr = <String>[];
   String currentLanguage = "english";
+  bool _isGenerating = false;
   
   final Map<String, String> languageFiles = {
     'en': 'english.txt',
@@ -94,16 +101,23 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });*/
 
-  void _newRandom() {
-      if (initFile == true) {
-        setState(() {
-          _pickWord = arr[random.nextInt(550)];
-        });
-      } else {
-        setState(() {
-          _pickWord = "Error _newRandom()";
-        });
-      }
+  void _newRandom() async {
+    if (initFile == true && arr.isNotEmpty) {
+      setState(() {
+        _isGenerating = true;
+      });
+      
+      await Future.delayed(const Duration(milliseconds: 300));
+      
+      setState(() {
+        _pickWord = arr[random.nextInt(arr.length)];
+        _isGenerating = false;
+      });
+    } else {
+      setState(() {
+        _pickWord = "Loading words...";
+      });
+    }
   }
 
   Future<void> readFileAsync(String filename) async {
@@ -120,9 +134,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> changeLanguage(String newLanguage) async {
     setState(() {
       currentLanguage = newLanguage;
-      _pickWord = "...";
+      _pickWord = "Loading...";
+      _isGenerating = true;
     });
     await readFileAsync('$newLanguage.txt');
+    await Future.delayed(const Duration(milliseconds: 500));
     _newRandom();
   }
 
@@ -161,13 +177,16 @@ class _MyHomePageState extends State<MyHomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        //backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(
+          widget.title,
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color(0xFF6366F1),
+        foregroundColor: Colors.white,
+        elevation: 0,
         actions: [
           PopupMenuButton<String>(
             icon: const Icon(Icons.language),
@@ -195,81 +214,239 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/background.jpg"),
-            fit: BoxFit.cover,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF6366F1),
+              Color(0xFF8B5CF6),
+              Color(0xFFA855F7),
+            ],
           ),
         ),
-
-        child: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Random word:',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              languageNames[currentLanguage] ?? currentLanguage,
-              style: const TextStyle(
-                color: Colors.white70,
-                fontSize: 14,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.all(16),
-              margin: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.9),
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.3),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Text(
-                _pickWord,
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: Colors.black87,
-                  fontWeight: FontWeight.bold,
+        child: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              bool isTablet = constraints.maxWidth > 600;
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: isTablet ? 48.0 : 24.0,
                 ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ],
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                // Header section
+                Column(
+                  children: [
+                    const Icon(
+                      Icons.casino,
+                      size: 48,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Random Word Generator',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: isTablet ? 36 : 28,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      languageNames[currentLanguage] ?? currentLanguage,
+                      style: const TextStyle(
+                        color: Colors.white70,
+                        fontSize: 16,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ],
+                ),
+                
+                const SizedBox(height: 48),
+                
+                // Word display card
+                Semantics(
+                  label: 'Current random word: ${_pickWord.isEmpty ? "No word generated yet" : _pickWord}',
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: isTablet ? 48 : 32,
+                      vertical: isTablet ? 32 : 24,
+                    ),
+                    margin: EdgeInsets.symmetric(
+                      horizontal: isTablet ? 32 : 16,
+                    ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(24),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.2),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
+                        spreadRadius: 2,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 400),
+                        transitionBuilder: (Widget child, Animation<double> animation) {
+                          return ScaleTransition(
+                            scale: animation,
+                            child: FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            ),
+                          );
+                        },
+                        child: _isGenerating
+                            ? const SizedBox(
+                                height: 60,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      Color(0xFF6366F1),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Text(
+                                _pickWord.isEmpty ? "Tap the dice!" : _pickWord,
+                                key: ValueKey(_pickWord),
+                                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                                  color: const Color(0xFF1F2937),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: isTablet ? 40 : 32,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                      ),
+                      if (_pickWord.isNotEmpty) ...[
+                        const SizedBox(height: 16),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF6366F1).withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Text(
+                            'Tap dice for new word',
+                            style: TextStyle(
+                              color: const Color(0xFF6366F1),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                    ),
+                  ),
+                ),
+                
+                const SizedBox(height: 48),
+                
+                // Stats section
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.2),
+                      width: 1,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          const Text(
+                            '552',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Text(
+                            'Words',
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        height: 40,
+                        width: 1,
+                        color: Colors.white.withValues(alpha: 0.3),
+                      ),
+                      Column(
+                        children: [
+                          const Text(
+                            '7',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Text(
+                            'Languages',
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                ],
+                ),
+              );
+            },
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _newRandom,
-        tooltip: 'New Random Word',
-        child: const Icon(Icons.casino),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: Semantics(
+        label: 'Generate a new random word',
+        child: FloatingActionButton.extended(
+          onPressed: _isGenerating ? null : _newRandom,
+          tooltip: 'Generate New Word',
+          backgroundColor: _isGenerating ? Colors.grey : Colors.white,
+          foregroundColor: _isGenerating ? Colors.grey[600] : const Color(0xFF6366F1),
+          elevation: 8,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          icon: AnimatedRotation(
+            turns: _isGenerating ? 1 : 0,
+            duration: const Duration(milliseconds: 300),
+            child: Icon(
+              _isGenerating ? Icons.refresh : Icons.casino,
+              size: 28,
+            ),
+          ),
+          label: Text(
+            _isGenerating ? 'Generating...' : 'New Word',
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
