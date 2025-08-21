@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:ui' as ui;
 
 void main() {
   runApp(const MyApp());
@@ -61,6 +62,17 @@ class _MyHomePageState extends State<MyHomePage> {
   String _pickWord = "";
   bool initFile = false;
   List<String> arr = <String>[];
+  String currentLanguage = "english";
+  
+  final Map<String, String> languageFiles = {
+    'en': 'english.txt',
+    'es': 'spanish.txt',
+    'it': 'italian.txt',
+    'pt': 'portuguese.txt',
+    'zh': 'chinese.txt',
+    'ja': 'japanese.txt',
+    'fr': 'french.txt',
+  };
   /*int _counter = 0;
   void _incrementCounter() {
     setState(() {
@@ -84,9 +96,15 @@ class _MyHomePageState extends State<MyHomePage> {
       }
   }
 
-  Future<void> readFileAsync() async {
-    String fileText = await rootBundle.loadString('assets/french.txt');
-    arr = fileText.split('\n');
+  Future<void> readFileAsync(String filename) async {
+    try {
+      String fileText = await rootBundle.loadString('assets/$filename');
+      arr = fileText.split('\n');
+    } catch (e) {
+      String fileText = await rootBundle.loadString('assets/english.txt');
+      arr = fileText.split('\n');
+      currentLanguage = "english";
+    }
   }
 
   @override
@@ -97,12 +115,21 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _initializeFile() async {
     if (!initFile) {
-      await readFileAsync();
+      await _detectLanguageAndLoadFile();
       setState(() {
         _pickWord = "...";
         initFile = true;
       });
     }
+  }
+  
+  Future<void> _detectLanguageAndLoadFile() async {
+    String deviceLanguage = ui.PlatformDispatcher.instance.locale.languageCode;
+    
+    String filename = languageFiles[deviceLanguage] ?? 'english.txt';
+    currentLanguage = filename.split('.').first;
+    
+    await readFileAsync(filename);
   }
 
   @override
@@ -150,9 +177,9 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'Random word:',
-              style: TextStyle(
+            Text(
+              'Random word ($currentLanguage):',
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -162,11 +189,11 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(16),
               margin: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.9),
+                color: Colors.white.withValues(alpha: 0.9),
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
+                    color: Colors.black.withValues(alpha: 0.3),
                     blurRadius: 8,
                     offset: const Offset(0, 4),
                   ),
