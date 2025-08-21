@@ -90,6 +90,135 @@ class _MyHomePageState extends State<MyHomePage> {
     'japanese': '🇯🇵 日本語',
     'french': '🇫🇷 Français',
   };
+  
+  final Map<String, Map<String, String>> gameRules = {
+    'english': {
+      'title': 'How to Play Just One',
+      'content': 'Together, make one player - the active player - guess a Mystery word by each secretly writing a clue on your board with an erasable marker.\n\nChoose your clue without consulting each other and be original so as not to write the same clue as another player. Indeed, all identical clues will be cancelled before the active player can even see them.\n\nAt the end of the game, calculate your score based on the number of Mystery words found.'
+    },
+    'spanish': {
+      'title': 'Cómo Jugar Just One',
+      'content': 'Juntos, hagan que un jugador - el jugador activo - adivine una palabra Misteriosa escribiendo cada uno, en secreto, una pista en su tablero con un marcador borrable.\n\nElige tu pista sin consultarte con otros y sé original para no escribir la misma pista que otro jugador. De hecho, todas las pistas idénticas serán canceladas antes de que el jugador activo pueda verlas.\n\nAl final del juego, calcula tu puntuación según el número de palabras Misteriosas encontradas.'
+    },
+    'italian': {
+      'title': 'Come Giocare a Just One',
+      'content': 'Insieme, fate indovinare una parola Misteriosa a un giocatore - il giocatore attivo - scrivendo ognuno, segretamente, un indizio sulla vostra lavagnetta con un pennarello cancellabile.\n\nScegliete il vostro indizio senza consultarvi e siate originali per non scrivere lo stesso indizio di un altro giocatore. Infatti, tutti gli indizi identici saranno cancellati prima ancora che il giocatore attivo possa vederli.\n\nAlla fine del gioco, calcolate il vostro punteggio in base al numero di parole Misteriose trovate.'
+    },
+    'portuguese': {
+      'title': 'Como Jogar Just One',
+      'content': 'Juntos, façam um jogador - o jogador ativo - adivinhar uma palavra Misteriosa escrevendo cada um, secretamente, uma dica no seu quadro com uma caneta apagável.\n\nEscolham sua dica sem se consultarem e sejam originais para não escrever a mesma dica que outro jogador. De fato, todas as dicas idênticas serão canceladas antes mesmo que o jogador ativo possa vê-las.\n\nNo final do jogo, calculem sua pontuação com base no número de palavras Misteriosas encontradas.'
+    },
+    'chinese': {
+      'title': '如何玩Just One',
+      'content': '一起让一名玩家 - 活跃玩家 - 通过每人秘密地用可擦记号笔在板上写一个线索来猜出神秘词汇。\n\n在不相互商量的情况下选择你的线索，要有创意，不要写与其他玩家相同的线索。事实上，所有相同的线索在活跃玩家看到之前就会被取消。\n\n游戏结束时，根据找到的神秘词汇数量计算你的分数。'
+    },
+    'japanese': {
+      'title': 'Just Oneの遊び方',
+      'content': 'みんなで、1人のプレイヤー（アクティブプレイヤー）に神秘の単語を当ててもらいます。消せるマーカーで、それぞれがこっそりとヒントをボードに書きます。\n\n相談せずにヒントを選び、他のプレイヤーと同じヒントを書かないよう独創的になってください。同じヒントはすべて、アクティブプレイヤーが見る前にキャンセルされます。\n\nゲーム終了時に、見つけた神秘の単語の数に基づいてスコアを計算します。'
+    },
+    'french': {
+      'title': 'Comment Jouer à Just One',
+      'content': 'Ensemble, faites deviner un mot Mystère à l\'un des joueurs - le joueur actif - en écrivant chacun, secrètement, un indice sur votre chevalet avec un feutre effaçable (type Velleda).\n\nChoisissez votre indice sans vous concerter et faites preuve d\'originalité pour ne pas écrire le même indice qu\'un autre joueur. En effet, tous les indices identiques seront annulés avant même que le joueur actif ne puisse les voir.\n\nÀ la fin de la partie, calculez votre score en fonction du nombre de mots Mystère trouvés.'
+    },
+  };
+  
+  final Map<String, Map<String, String>> uiTexts = {
+    'english': {
+      'tapDice': 'Tap dice for new word',
+      'words': 'Words',
+      'languages': 'Languages',
+      'newWord': 'New Word',
+      'generating': 'Generating...',
+      'gameRules': 'Game Rules',
+      'gotIt': 'Got it! 👍',
+      'randomWordGenerator': 'Random Word Generator',
+      'tapTheDice': 'Tap the dice!',
+      'loading': 'Loading...',
+      'generateNewWord': 'Generate a new random word',
+    },
+    'spanish': {
+      'tapDice': 'Toca el dado para nueva palabra',
+      'words': 'Palabras',
+      'languages': 'Idiomas',
+      'newWord': 'Nueva Palabra',
+      'generating': 'Generando...',
+      'gameRules': 'Reglas del Juego',
+      'gotIt': '¡Entendido! 👍',
+      'randomWordGenerator': 'Generador de Palabras Aleatorias',
+      'tapTheDice': '¡Toca el dado!',
+      'loading': 'Cargando...',
+      'generateNewWord': 'Genera una nueva palabra aleatoria',
+    },
+    'italian': {
+      'tapDice': 'Tocca il dado per nuova parola',
+      'words': 'Parole',
+      'languages': 'Lingue',
+      'newWord': 'Nuova Parola',
+      'generating': 'Generazione...',
+      'gameRules': 'Regole del Gioco',
+      'gotIt': 'Capito! 👍',
+      'randomWordGenerator': 'Generatore di Parole Casuali',
+      'tapTheDice': 'Tocca il dado!',
+      'loading': 'Caricamento...',
+      'generateNewWord': 'Genera una nuova parola casuale',
+    },
+    'portuguese': {
+      'tapDice': 'Toque no dado para nova palavra',
+      'words': 'Palavras',
+      'languages': 'Idiomas',
+      'newWord': 'Nova Palavra',
+      'generating': 'Gerando...',
+      'gameRules': 'Regras do Jogo',
+      'gotIt': 'Entendi! 👍',
+      'randomWordGenerator': 'Gerador de Palavras Aleatórias',
+      'tapTheDice': 'Toque no dado!',
+      'loading': 'Carregando...',
+      'generateNewWord': 'Gera uma nova palavra aleatória',
+    },
+    'chinese': {
+      'tapDice': '点击骰子生成新词',
+      'words': '词汇',
+      'languages': '语言',
+      'newWord': '新词汇',
+      'generating': '生成中...',
+      'gameRules': '游戏规则',
+      'gotIt': '明白了! 👍',
+      'randomWordGenerator': '随机词汇生成器',
+      'tapTheDice': '点击骰子!',
+      'loading': '加载中...',
+      'generateNewWord': '生成一个新的随机词汇',
+    },
+    'japanese': {
+      'tapDice': 'サイコロをタップして新しい単語',
+      'words': '単語',
+      'languages': '言語',
+      'newWord': '新しい単語',
+      'generating': '生成中...',
+      'gameRules': 'ゲームルール',
+      'gotIt': '分かりました! 👍',
+      'randomWordGenerator': 'ランダム単語ジェネレーター',
+      'tapTheDice': 'サイコロをタップ!',
+      'loading': '読み込み中...',
+      'generateNewWord': '新しいランダムな単語を生成',
+    },
+    'french': {
+      'tapDice': 'Touchez le dé pour un nouveau mot',
+      'words': 'Mots',
+      'languages': 'Langues',
+      'newWord': 'Nouveau Mot',
+      'generating': 'Génération...',
+      'gameRules': 'Règles du Jeu',
+      'gotIt': 'Compris! 👍',
+      'randomWordGenerator': 'Générateur de Mots Aléatoires',
+      'tapTheDice': 'Touchez le dé!',
+      'loading': 'Chargement...',
+      'generateNewWord': 'Générer un nouveau mot aléatoire',
+    },
+  };
+  
+  String getText(String key) {
+    return uiTexts[currentLanguage]?[key] ?? uiTexts['english']![key]!;
+  }
   /*int _counter = 0;
   void _incrementCounter() {
     setState(() {
@@ -115,7 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     } else {
       setState(() {
-        _pickWord = "Loading words...";
+        _pickWord = getText('loading');
       });
     }
   }
@@ -134,12 +263,118 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> changeLanguage(String newLanguage) async {
     setState(() {
       currentLanguage = newLanguage;
-      _pickWord = "Loading...";
+      _pickWord = getText('loading');
       _isGenerating = true;
     });
     await readFileAsync('$newLanguage.txt');
     await Future.delayed(const Duration(milliseconds: 500));
     _newRandom();
+  }
+  
+  void _showRulesDialog() {
+    final rules = gameRules[currentLanguage] ?? gameRules['english']!;
+    
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 500),
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFF6366F1),
+                  Color(0xFF8B5CF6),
+                ],
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.help_outline,
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        rules['title']!,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: const Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Container(
+                  constraints: const BoxConstraints(maxHeight: 400),
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Text(
+                      rules['content']!,
+                      style: const TextStyle(
+                        color: Color(0xFF1F2937),
+                        fontSize: 16,
+                        height: 1.6,
+                        letterSpacing: 0.3,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: const Color(0xFF6366F1),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 0,
+                    ),
+                    child: Text(
+                      getText('gotIt'),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -152,7 +387,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (!initFile) {
       await _detectLanguageAndLoadFile();
       setState(() {
-        _pickWord = "...";
+        _pickWord = getText('tapTheDice');
         initFile = true;
       });
     }
@@ -188,6 +423,11 @@ class _MyHomePageState extends State<MyHomePage> {
         foregroundColor: Colors.white,
         elevation: 0,
         actions: [
+          IconButton(
+            onPressed: _showRulesDialog,
+            icon: const Icon(Icons.help_outline),
+            tooltip: getText('gameRules'),
+          ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.language),
             onSelected: (String language) {
@@ -246,7 +486,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Random Word Generator',
+                      getText('randomWordGenerator'),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: isTablet ? 36 : 28,
@@ -317,7 +557,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               )
                             : Text(
-                                _pickWord.isEmpty ? "Tap the dice!" : _pickWord,
+                                _pickWord.isEmpty ? getText('tapTheDice') : _pickWord,
                                 key: ValueKey(_pickWord),
                                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                                   color: const Color(0xFF1F2937),
@@ -336,7 +576,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Text(
-                            'Tap dice for new word',
+                            getText('tapDice'),
                             style: TextStyle(
                               color: const Color(0xFF6366F1),
                               fontSize: 14,
@@ -376,8 +616,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const Text(
-                            'Words',
+                          Text(
+                            getText('words'),
                             style: TextStyle(
                               color: Colors.white70,
                               fontSize: 12,
@@ -400,8 +640,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const Text(
-                            'Languages',
+                          Text(
+                            getText('languages'),
                             style: TextStyle(
                               color: Colors.white70,
                               fontSize: 12,
@@ -420,10 +660,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: Semantics(
-        label: 'Generate a new random word',
+        label: getText('generateNewWord'),
         child: FloatingActionButton.extended(
           onPressed: _isGenerating ? null : _newRandom,
-          tooltip: 'Generate New Word',
+          tooltip: getText('generateNewWord'),
           backgroundColor: _isGenerating ? Colors.grey : Colors.white,
           foregroundColor: _isGenerating ? Colors.grey[600] : const Color(0xFF6366F1),
           elevation: 8,
@@ -439,7 +679,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           label: Text(
-            _isGenerating ? 'Generating...' : 'New Word',
+            _isGenerating ? getText('generating') : getText('newWord'),
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
