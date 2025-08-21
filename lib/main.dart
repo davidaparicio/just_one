@@ -2,10 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'dart:ui' as ui;
-
-import 'l10n/app_localizations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,21 +16,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Just One',
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en'), // English
-        Locale('es'), // Spanish
-        Locale('fr'), // French
-        Locale('it'), // Italian
-        Locale('pt'), // Portuguese
-        Locale('zh'), // Chinese
-        Locale('ja'), // Japanese
-      ],
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF6366F1),
@@ -58,13 +40,24 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const MyHomePage(),
+      home: const MyHomePage(title: '🎲 Just One'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  const MyHomePage({super.key, required this.title});
+
+  // This widget is the home page of your application. It is stateful, meaning
+  // that it has a State object (defined below) that contains fields that affect
+  // how it looks.
+
+  // This class is the configuration for the state. It holds the values (in this
+  // case the title) provided by the parent (in this case the App widget) and
+  // used by the build method of the State. Fields in a Widget subclass are
+  // always marked "final".
+
+  final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -77,23 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
   List<String> arr = <String>[];
   String currentLanguage = "english";
   bool _isGenerating = false;
-  
-  String _getDisplayText(AppLocalizations l10n) {
-    if (_pickWord.isEmpty || _pickWord == "...") {
-      return l10n.tapTheDice;
-    }
-    if (_pickWord == "Loading..." || _pickWord == "Loading words...") {
-      return l10n.loading;
-    }
-    return _pickWord;
-  }
-  
-  String _getAccessibilityText(AppLocalizations l10n) {
-    if (_pickWord.isEmpty || _pickWord == "..." || _pickWord == "Loading..." || _pickWord == "Loading words...") {
-      return l10n.noWordGenerated;
-    }
-    return _pickWord;
-  }
   
   final Map<String, String> languageFiles = {
     'en': 'english.txt',
@@ -146,6 +122,103 @@ class _MyHomePageState extends State<MyHomePage> {
     },
   };
   
+  final Map<String, Map<String, String>> uiTexts = {
+    'english': {
+      'tapDice': 'Tap dice for new word',
+      'words': 'Words',
+      'languages': 'Languages',
+      'newWord': 'New Word',
+      'generating': 'Generating...',
+      'gameRules': 'Game Rules',
+      'gotIt': 'Got it! 👍',
+      'randomWordGenerator': 'Random Word Generator',
+      'tapTheDice': 'Tap the dice!',
+      'loading': 'Loading...',
+      'generateNewWord': 'Generate a new random word',
+    },
+    'spanish': {
+      'tapDice': 'Toca el dado para nueva palabra',
+      'words': 'Palabras',
+      'languages': 'Idiomas',
+      'newWord': 'Nueva Palabra',
+      'generating': 'Generando...',
+      'gameRules': 'Reglas del Juego',
+      'gotIt': '¡Entendido! 👍',
+      'randomWordGenerator': 'Generador de Palabras Aleatorias',
+      'tapTheDice': '¡Toca el dado!',
+      'loading': 'Cargando...',
+      'generateNewWord': 'Genera una nueva palabra aleatoria',
+    },
+    'italian': {
+      'tapDice': 'Tocca il dado per nuova parola',
+      'words': 'Parole',
+      'languages': 'Lingue',
+      'newWord': 'Nuova Parola',
+      'generating': 'Generazione...',
+      'gameRules': 'Regole del Gioco',
+      'gotIt': 'Capito! 👍',
+      'randomWordGenerator': 'Generatore di Parole Casuali',
+      'tapTheDice': 'Tocca il dado!',
+      'loading': 'Caricamento...',
+      'generateNewWord': 'Genera una nuova parola casuale',
+    },
+    'portuguese': {
+      'tapDice': 'Toque no dado para nova palavra',
+      'words': 'Palavras',
+      'languages': 'Idiomas',
+      'newWord': 'Nova Palavra',
+      'generating': 'Gerando...',
+      'gameRules': 'Regras do Jogo',
+      'gotIt': 'Entendi! 👍',
+      'randomWordGenerator': 'Gerador de Palavras Aleatórias',
+      'tapTheDice': 'Toque no dado!',
+      'loading': 'Carregando...',
+      'generateNewWord': 'Gera uma nova palavra aleatória',
+    },
+    'chinese': {
+      'tapDice': '点击骰子生成新词',
+      'words': '词汇',
+      'languages': '语言',
+      'newWord': '新词汇',
+      'generating': '生成中...',
+      'gameRules': '游戏规则',
+      'gotIt': '明白了! 👍',
+      'randomWordGenerator': '随机词汇生成器',
+      'tapTheDice': '点击骰子!',
+      'loading': '加载中...',
+      'generateNewWord': '生成一个新的随机词汇',
+    },
+    'japanese': {
+      'tapDice': 'サイコロをタップして新しい単語',
+      'words': '単語',
+      'languages': '言語',
+      'newWord': '新しい単語',
+      'generating': '生成中...',
+      'gameRules': 'ゲームルール',
+      'gotIt': '分かりました! 👍',
+      'randomWordGenerator': 'ランダム単語ジェネレーター',
+      'tapTheDice': 'サイコロをタップ!',
+      'loading': '読み込み中...',
+      'generateNewWord': '新しいランダムな単語を生成',
+    },
+    'french': {
+      'tapDice': 'Touchez le dé pour un nouveau mot',
+      'words': 'Mots',
+      'languages': 'Langues',
+      'newWord': 'Nouveau Mot',
+      'generating': 'Génération...',
+      'gameRules': 'Règles du Jeu',
+      'gotIt': 'Compris! 👍',
+      'randomWordGenerator': 'Générateur de Mots Aléatoires',
+      'tapTheDice': 'Touchez le dé!',
+      'loading': 'Chargement...',
+      'generateNewWord': 'Générer un nouveau mot aléatoire',
+    },
+  };
+  
+  String getText(String key) {
+    return uiTexts[currentLanguage]?[key] ?? uiTexts['english']![key]!;
+  }
   /*int _counter = 0;
   void _incrementCounter() {
     setState(() {
@@ -171,7 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     } else {
       setState(() {
-        _pickWord = "Loading words...";
+        _pickWord = getText('loading');
       });
     }
   }
@@ -190,7 +263,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> changeLanguage(String newLanguage) async {
     setState(() {
       currentLanguage = newLanguage;
-      _pickWord = "Loading...";
+      _pickWord = getText('loading');
       _isGenerating = true;
     });
     await readFileAsync('$newLanguage.txt');
@@ -199,7 +272,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   
   void _showRulesDialog() {
-    final l10n = AppLocalizations.of(context)!;
+    final rules = gameRules[currentLanguage] ?? gameRules['english']!;
     
     showDialog(
       context: context,
@@ -235,7 +308,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
-                        l10n.howToPlayTitle,
+                        rules['title']!,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 22,
@@ -263,7 +336,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   child: SingleChildScrollView(
                     child: Text(
-                      l10n.howToPlayContent,
+                      rules['content']!,
                       style: const TextStyle(
                         color: Color(0xFF1F2937),
                         fontSize: 16,
@@ -288,7 +361,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       elevation: 0,
                     ),
                     child: Text(
-                      l10n.gotIt,
+                      getText('gotIt'),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -314,7 +387,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (!initFile) {
       await _detectLanguageAndLoadFile();
       setState(() {
-        _pickWord = "...";
+        _pickWord = getText('tapTheDice');
         initFile = true;
       });
     }
@@ -331,7 +404,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -341,7 +413,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          l10n.appTitle,
+          widget.title,
           style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -354,7 +426,7 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(
             onPressed: _showRulesDialog,
             icon: const Icon(Icons.help_outline),
-            tooltip: l10n.gameRules,
+            tooltip: getText('gameRules'),
           ),
           PopupMenuButton<String>(
             icon: const Icon(Icons.language),
@@ -395,7 +467,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         child: SafeArea(
           child: LayoutBuilder(
-            builder: (builderContext, constraints) {
+            builder: (context, constraints) {
               bool isTablet = constraints.maxWidth > 600;
               return Padding(
                 padding: EdgeInsets.symmetric(
@@ -414,7 +486,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      l10n.randomWordGenerator,
+                      getText('randomWordGenerator'),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: isTablet ? 36 : 28,
@@ -485,7 +557,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               )
                             : Text(
-                                _getDisplayText(l10n),
+                                _pickWord.isEmpty ? getText('tapTheDice') : _pickWord,
                                 key: ValueKey(_pickWord),
                                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                                   color: const Color(0xFF1F2937),
@@ -504,7 +576,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Text(
-                            l10n.tapDice,
+                            getText('tapDice'),
                             style: TextStyle(
                               color: const Color(0xFF6366F1),
                               fontSize: 14,
@@ -545,7 +617,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                           Text(
-                            l10n.words,
+                            getText('words'),
                             style: TextStyle(
                               color: Colors.white70,
                               fontSize: 12,
@@ -569,7 +641,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                           Text(
-                            l10n.languages,
+                            getText('languages'),
                             style: TextStyle(
                               color: Colors.white70,
                               fontSize: 12,
@@ -588,10 +660,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: Semantics(
-        label: l10n.currentRandomWord(_getAccessibilityText(l10n)),
+        label: getText('generateNewWord'),
         child: FloatingActionButton.extended(
           onPressed: _isGenerating ? null : _newRandom,
-          tooltip: l10n.generateNewWord,
+          tooltip: getText('generateNewWord'),
           backgroundColor: _isGenerating ? Colors.grey : Colors.white,
           foregroundColor: _isGenerating ? Colors.grey[600] : const Color(0xFF6366F1),
           elevation: 8,
@@ -607,7 +679,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           label: Text(
-            _isGenerating ? l10n.generating : l10n.newWord,
+            _isGenerating ? getText('generating') : getText('newWord'),
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
