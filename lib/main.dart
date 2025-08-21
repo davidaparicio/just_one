@@ -73,6 +73,16 @@ class _MyHomePageState extends State<MyHomePage> {
     'ja': 'japanese.txt',
     'fr': 'french.txt',
   };
+  
+  final Map<String, String> languageNames = {
+    'english': '🇺🇸 English',
+    'spanish': '🇪🇸 Español',
+    'italian': '🇮🇹 Italiano',
+    'portuguese': '🇵🇹 Português',
+    'chinese': '🇨🇳 中文',
+    'japanese': '🇯🇵 日本語',
+    'french': '🇫🇷 Français',
+  };
   /*int _counter = 0;
   void _incrementCounter() {
     setState(() {
@@ -105,6 +115,15 @@ class _MyHomePageState extends State<MyHomePage> {
       arr = fileText.split('\n');
       currentLanguage = "english";
     }
+  }
+  
+  Future<void> changeLanguage(String newLanguage) async {
+    setState(() {
+      currentLanguage = newLanguage;
+      _pickWord = "...";
+    });
+    await readFileAsync('$newLanguage.txt');
+    _newRandom();
   }
 
   @override
@@ -149,6 +168,31 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        actions: [
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.language),
+            onSelected: (String language) {
+              changeLanguage(language);
+            },
+            itemBuilder: (BuildContext context) {
+              return languageNames.entries.map((entry) {
+                return PopupMenuItem<String>(
+                  value: entry.key,
+                  child: Row(
+                    children: [
+                      Text(entry.value),
+                      if (currentLanguage == entry.key)
+                        const Padding(
+                          padding: EdgeInsets.only(left: 8.0),
+                          child: Icon(Icons.check, color: Colors.green),
+                        ),
+                    ],
+                  ),
+                );
+              }).toList();
+            },
+          ),
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -178,13 +222,22 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              'Random word ($currentLanguage):',
+              'Random word:',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
+            Text(
+              languageNames[currentLanguage] ?? currentLanguage,
+              style: const TextStyle(
+                color: Colors.white70,
+                fontSize: 14,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            const SizedBox(height: 10),
             Container(
               padding: const EdgeInsets.all(16),
               margin: const EdgeInsets.all(20),
