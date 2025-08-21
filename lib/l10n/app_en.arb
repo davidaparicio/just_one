@@ -1,0 +1,72 @@
+{
+  "appTitle": "🎲 Just One",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "randomWordGenerator": "Random Word Generator",
+  "@randomWordGenerator": {
+    "description": "Main title text"
+  },
+  "tapTheDice": "Tap the dice!",
+  "@tapTheDice": {
+    "description": "Initial message when no word is generated"
+  },
+  "tapDice": "Tap dice for new word",
+  "@tapDice": {
+    "description": "Hint text below the word card"
+  },
+  "words": "Words",
+  "@words": {
+    "description": "Stats label for word count"
+  },
+  "languages": "Languages",
+  "@languages": {
+    "description": "Stats label for language count"
+  },
+  "newWord": "New Word",
+  "@newWord": {
+    "description": "Label for the floating action button"
+  },
+  "generating": "Generating...",
+  "@generating": {
+    "description": "Loading text when generating a new word"
+  },
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading text when switching languages"
+  },
+  "gameRules": "Game Rules",
+  "@gameRules": {
+    "description": "Tooltip and title for rules dialog"
+  },
+  "gotIt": "Got it! 👍",
+  "@gotIt": {
+    "description": "Button text to close rules dialog"
+  },
+  "generateNewWord": "Generate a new random word",
+  "@generateNewWord": {
+    "description": "Accessibility label and tooltip for generate button"
+  },
+  "currentRandomWord": "Current random word: {word}",
+  "@currentRandomWord": {
+    "description": "Accessibility label for the word display",
+    "placeholders": {
+      "word": {
+        "type": "String",
+        "description": "The current word being displayed"
+      }
+    }
+  },
+  "noWordGenerated": "No word generated yet",
+  "@noWordGenerated": {
+    "description": "Accessibility text when no word is shown"
+  },
+  "howToPlayTitle": "How to Play Just One",
+  "@howToPlayTitle": {
+    "description": "Title for game rules dialog"
+  },
+  "howToPlayContent": "Together, make one player - the active player - guess a Mystery word by each secretly writing a clue on your board with an erasable marker.\\n\\nChoose your clue without consulting each other and be original so as not to write the same clue as another player. Indeed, all identical clues will be cancelled before the active player can even see them.\\n\\nAt the end of the game, calculate your score based on the number of Mystery words found.",
+  "@howToPlayContent": {
+    "description": "Game rules content"
+  }
+}

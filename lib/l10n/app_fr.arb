@@ -1,0 +1,18 @@
+{
+  "appTitle": "🎲 Just One",
+  "randomWordGenerator": "Générateur de Mots Aléatoires",
+  "tapTheDice": "Touchez le dé!",
+  "tapDice": "Touchez le dé pour un nouveau mot",
+  "words": "Mots",
+  "languages": "Langues",
+  "newWord": "Nouveau Mot",
+  "generating": "Génération...",
+  "loading": "Chargement...",
+  "gameRules": "Règles du Jeu",
+  "gotIt": "Compris! 👍",
+  "generateNewWord": "Générer un nouveau mot aléatoire",
+  "currentRandomWord": "Mot aléatoire actuel: {word}",
+  "noWordGenerated": "Aucun mot généré pour l'instant",
+  "howToPlayTitle": "Comment Jouer à Just One",
+  "howToPlayContent": "Ensemble, faites deviner un mot Mystère à l'un des joueurs - le joueur actif - en écrivant chacun, secrètement, un indice sur votre chevalet avec un feutre effaçable (type Velleda).\\n\\nChoisissez votre indice sans vous concerter et faites preuve d'originalité pour ne pas écrire le même indice qu'un autre joueur. En effet, tous les indices identiques seront annulés avant même que le joueur actif ne puisse les voir.\\n\\nÀ la fin de la partie, calculez votre score en fonction du nombre de mots Mystère trouvés."
+}
